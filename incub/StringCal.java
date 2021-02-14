@@ -16,10 +16,25 @@ public class StringCal {
 
     // 
     int Add(String calString){
+
+        String delemeter = ",";
+
+        if(calString.startsWith("//") && calString.contains("\\n")){
+            try {
+                delemeter = calString.substring(2,calString.indexOf("\\n")); 
+                calString = calString.substring(calString.indexOf("\\n")+2);
+            } catch (Exception e) {
+                System.out.println(" Exception Occurred : "+e.getMessage());
+                return 0;
+            }
+            
+           // System.out.println("dele "+delemeter + " "+calString);
+        }
+
         // \n into ,
-        calString = calString.replace("\\n",",");
-        
-        String[] arr = calString.split(",");
+        calString = calString.replace("\\n",delemeter);
+
+        String[] arr = calString.split(delemeter);
         int fans = 0;
         
         for(String str : arr){
