@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
 public class StringCal {
+    String[] operators = new String[] {"-","+","/","*","x","^","X"};
+
     public static void main(String[] args) {
         
         StringCal stringCal = new StringCal();
@@ -15,33 +17,56 @@ public class StringCal {
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
-        
-
-        
     }
 
     // 
     int Add(String calString) throws NegetiveNumberException{
 
-        String delemeter = ",";
+        String delimeter = ",";
+        //List<String> delimeters = new ArrayList<>();
+        String[] delimeters = {};
 
-        if(calString.startsWith("//") && calString.contains("\\n")){
+        if(calString.startsWith("//[") && calString.contains("]\\n")){
             try {
-                delemeter = calString.substring(2,calString.indexOf("\\n")); 
+                delimeter = calString.substring(3,calString.indexOf("]\\n")).replace("][","d"); 
+                //System.out.println("Str "+calString.substring(3,calString.indexOf("]\\n")));
                 calString = calString.substring(calString.indexOf("\\n")+2);
+
+                if(delimeter.contains("d")){
+                    delimeters = delimeter.split("d");
+                }
+                //System.out.println(" delesize " + delimeters.length);
+
             } catch (Exception e) {
                 throw e;
                 //System.out.println(" Exception Occurred : "+e.getMessage());
                 //return 0;
             }
             
-           // System.out.println("dele "+delemeter + " "+calString);
+           // System.out.println("dele "+delimeter + " "+calString);
         }
 
-        // \n into ,
-        calString = calString.replace("\\n",delemeter);
+        if (delimeters.length > 1){
+            String tempDelimeter = delimeters[0];
+            calString = calString.replace("\\n",tempDelimeter);
 
-        String[] arr = calString.split(delemeter);
+            for(int i = 1; i < delimeters.length; i++){
+                //if()
+                tempDelimeter += "|"+delimeters[i];
+            }
+            delimeter = tempDelimeter;
+        }else
+            calString = calString.replace("\\n",delimeter);
+
+        // 
+        delimeter = delimeter.replace("+","\\+");
+        delimeter = delimeter.replace("*","\\*");
+        delimeter = delimeter.replace("^","\\^");
+
+        //System.out.println("dele: "+delimeter);
+        //System.out.println("Cal: "+calString);
+
+        String[] arr = calString.split(delimeter);
         int fans = 0;
         
         for(String str : arr){
