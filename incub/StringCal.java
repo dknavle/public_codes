@@ -47,7 +47,9 @@ public class StringCal {
         for(String str : arr){
             try{
                 if(str.contains("-")) throw new NegetiveNumberException("negatives not allowed. "+ str);
-                fans += Integer.parseInt(str);
+                int number = Integer.parseInt(str);
+                if(number > 1000) continue;
+                fans += number;
             }catch(Exception e){
                 throw e;//new Exception(" Exception Occurred : "+e.getMessage());
                 //System.out.println(" Exception Occurred : "+e.getMessage());
