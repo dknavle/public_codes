@@ -9,13 +9,19 @@ public class StringCal {
         Scanner sc = new Scanner(System.in);
         String calString = sc.next();
 
-        ans = stringCal.Add(calString);
+        try{
+            ans = stringCal.Add(calString);
+            System.out.println(ans);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        
 
-        System.out.println(ans);
+        
     }
 
     // 
-    int Add(String calString){
+    int Add(String calString) throws NegetiveNumberException{
 
         String delemeter = ",";
 
@@ -24,8 +30,9 @@ public class StringCal {
                 delemeter = calString.substring(2,calString.indexOf("\\n")); 
                 calString = calString.substring(calString.indexOf("\\n")+2);
             } catch (Exception e) {
-                System.out.println(" Exception Occurred : "+e.getMessage());
-                return 0;
+                throw e;
+                //System.out.println(" Exception Occurred : "+e.getMessage());
+                //return 0;
             }
             
            // System.out.println("dele "+delemeter + " "+calString);
@@ -39,12 +46,21 @@ public class StringCal {
         
         for(String str : arr){
             try{
+                if(str.contains("-")) throw new NegetiveNumberException("negatives not allowed. "+ str);
                 fans += Integer.parseInt(str);
             }catch(Exception e){
-                System.out.println(" Exception Occurred : "+e.getMessage());
-                return 0;
+                throw e;//new Exception(" Exception Occurred : "+e.getMessage());
+                //System.out.println(" Exception Occurred : "+e.getMessage());
+                //return 0;
             }
         }
         return fans;
     }
 }
+
+class NegetiveNumberException extends Exception{  
+    NegetiveNumberException(String s){  
+     super(s);  
+    }  
+}
+
