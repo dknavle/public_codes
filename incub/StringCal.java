@@ -16,9 +16,12 @@ public class StringCal {
 
     // 
     int Add(String calString){
+        // \n into ,
+        calString = calString.replace("\\n",",");
+        
         String[] arr = calString.split(",");
         int fans = 0;
-
+        
         for(String str : arr){
             try{
                 fans += Integer.parseInt(str);
